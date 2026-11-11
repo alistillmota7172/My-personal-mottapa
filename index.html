@@ -1,80 +1,21 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#f6f4ee">
-  <title>Daily Bloom — wellness tracker</title>
-  <style>
-    :root{--ink:#24352d;--muted:#758078;--paper:#f6f4ee;--card:#fffefa;--green:#52745f;--green-dark:#385643;--lime:#d8e6c6;--peach:#f4dfd1;--line:#e9e7df;--shadow:0 12px 35px rgba(43,57,47,.06)}
-    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.5 Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}button,input,select{font:inherit}button{cursor:pointer} .app{max-width:1180px;margin:auto;padding:28px 28px 48px}
-    header{display:flex;align-items:center;justify-content:space-between;margin:4px 0 34px}.brand{display:flex;gap:12px;align-items:center;font-weight:750;font-size:19px;letter-spacing:-.4px}.brand-mark{width:38px;height:38px;display:grid;place-items:center;background:var(--green);color:white;border-radius:13px;font-size:19px}.today{color:var(--muted);font-size:13px}
-    .welcome{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:25px}.eyebrow{text-transform:uppercase;letter-spacing:1.6px;font-size:11px;font-weight:750;color:var(--green)}h1{font-size:clamp(29px,4vw,42px);line-height:1.08;letter-spacing:-1.6px;margin:9px 0 8px}.welcome p{color:var(--muted);margin:0}.date-pill{background:#e9eee4;color:var(--green-dark);border-radius:999px;padding:9px 15px;font-size:13px;font-weight:650;white-space:nowrap}
-    .grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:18px}.card{background:var(--card);border:1px solid rgba(226,225,216,.75);border-radius:20px;padding:22px;box-shadow:var(--shadow)}.calories{grid-column:span 7}.steps{grid-column:span 5}.water{grid-column:span 5}.habits{grid-column:span 7}.card-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:17px}.card-title{display:flex;gap:11px;align-items:center;font-weight:720;font-size:16px}.icon{width:34px;height:34px;border-radius:11px;background:#eff2e9;display:grid;place-items:center;font-size:17px}.goal{font-size:12px;color:var(--muted)}
-    .calorie-summary{display:flex;align-items:center;gap:21px;margin:6px 0 18px}.ring{--progress:0deg;width:100px;height:100px;border-radius:50%;background:conic-gradient(var(--green) var(--progress),#eceee7 0);display:grid;place-items:center;flex:none;position:relative}.ring:before{content:"";position:absolute;inset:8px;background:var(--card);border-radius:50%}.ring-content{position:relative;text-align:center}.ring-number{font-weight:780;font-size:20px;letter-spacing:-.7px}.ring-caption{font-size:10px;color:var(--muted)}.calorie-copy strong{display:block;font-size:17px}.calorie-copy span{font-size:13px;color:var(--muted)}.bar{height:8px;background:#eceee7;border-radius:99px;overflow:hidden}.bar-fill{height:100%;width:0;background:var(--green);border-radius:inherit;transition:width .25s}.meal-form{display:grid;grid-template-columns:1.15fr 1.5fr .8fr auto;gap:8px;margin-top:16px}.field{min-width:0;border:1px solid var(--line);border-radius:10px;padding:10px 11px;background:#fffefa;color:var(--ink);outline:none}.field:focus{border-color:#9bb39b;box-shadow:0 0 0 3px rgba(82,116,95,.1)}.primary{border:0;border-radius:10px;padding:10px 15px;background:var(--green);color:white;font-weight:700;transition:background .15s}.primary:hover{background:var(--green-dark)}.meal-list{display:grid;gap:8px;margin-top:14px}.meal-row{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:9px 11px;background:#f8f7f2;border-radius:10px;font-size:13px}.meal-name{font-weight:650}.meal-meta{color:var(--muted);font-size:12px}.remove{border:0;background:transparent;color:#9a8175;font-size:18px;padding:0 3px}.empty{color:var(--muted);font-size:13px;padding:9px 0}
-    .metric-line{display:flex;justify-content:space-between;align-items:baseline;margin:8px 0 12px}.metric{font-size:32px;letter-spacing:-1px;font-weight:780}.metric small{font-size:14px;color:var(--muted);font-weight:550;letter-spacing:0}.controls{display:flex;gap:9px;margin-top:16px}.controls .field{flex:1;min-width:0}.soft-btn{border:1px solid var(--line);background:#fffefa;color:var(--green-dark);border-radius:10px;padding:9px 13px;font-weight:650}.soft-btn:hover{background:#f1f4ec}.water-marks{display:flex;gap:5px;margin-top:14px}.water-mark{height:7px;flex:1;background:#e8eee8;border-radius:9px}.water-mark.filled{background:#7fa899}
-    .habits .card-head{margin-bottom:10px}.habit-list{display:grid;grid-template-columns:1fr 1fr;gap:10px}.habit{border:1px solid var(--line);background:#fffefa;border-radius:13px;padding:13px;display:flex;align-items:center;gap:11px;text-align:left;color:var(--ink);transition:.15s}.habit:hover{border-color:#bbcab8}.habit.done{background:#f0f4eb;border-color:#dbe5d5}.check{width:21px;height:21px;border-radius:7px;border:1.5px solid #c9cec5;display:grid;place-items:center;flex:none;color:white;font-size:13px}.done .check{background:var(--green);border-color:var(--green)}.habit-text{font-weight:650;font-size:13px}.habit-sub{display:block;font-weight:450;color:var(--muted);font-size:11px;margin-top:1px}.habit-count{color:var(--muted);font-size:12px}.habit-progress{height:5px;background:#eceee7;border-radius:9px;margin-top:17px;overflow:hidden}.habit-progress div{height:100%;width:0;background:#91aa84;border-radius:inherit;transition:width .2s}
-    .note{color:var(--muted);font-size:11px;text-align:center;margin:20px 0 0}.toast{position:fixed;bottom:20px;left:50%;transform:translate(-50%,15px);background:#293b30;color:white;padding:10px 16px;border-radius:12px;font-size:13px;opacity:0;pointer-events:none;transition:.2s}.toast.show{opacity:1;transform:translate(-50%,0)}
-    @media(max-width:760px){.app{padding:20px 15px 34px}.welcome{align-items:flex-start;gap:12px;flex-direction:column}.grid{gap:13px}.calories,.steps,.water,.habits{grid-column:span 12}.card{padding:18px}.meal-form{grid-template-columns:1fr 1fr}.meal-form .primary{grid-column:span 2}.calorie-summary{gap:16px}.habit-list{gap:8px}}
-    @media(max-width:400px){.habit-list{grid-template-columns:1fr 1fr}.habit{padding:11px 9px;gap:8px}.habit-text{font-size:12px}.metric{font-size:29px}}
-  </style>
-</head>
-<body>
-  <main class="app">
-    <header><div class="brand"><div class="brand-mark" aria-hidden="true">✿</div>Daily Bloom</div><div class="today" id="headerDate"></div></header>
-    <section class="welcome"><div><div class="eyebrow">A little progress, every day</div><h1>Your daily reset</h1><p>Build a routine that feels good, one small step at a time.</p></div><div class="date-pill" id="datePill"></div></section>
-    <section class="grid" aria-label="Daily goals">
-      <article class="card calories"><div class="card-head"><div class="card-title"><span class="icon" aria-hidden="true">🥗</span>Calories</div><span class="goal">Daily goal · 1,500 kcal</span></div>
-        <div class="calorie-summary"><div class="ring" id="calorieRing"><div class="ring-content"><div class="ring-number" id="calorieTotal">0</div><div class="ring-caption">kcal eaten</div></div></div><div class="calorie-copy"><strong id="calorieRemaining">1,500 kcal remaining</strong><span>Log meals to keep track of your day.</span></div></div>
-        <div class="bar" role="progressbar" aria-label="Calories toward daily goal" aria-valuemin="0" aria-valuemax="1500" id="calorieBar"><div class="bar-fill" id="calorieFill"></div></div>
-        <form class="meal-form" id="mealForm"><select class="field" id="mealType" aria-label="Meal type"><option>Breakfast</option><option>Lunch</option><option>Dinner</option><option>Snack</option></select><input class="field" id="mealName" placeholder="What did you eat?" maxlength="60" aria-label="Food name" required><input class="field" id="mealCalories" type="number" min="1" max="10000" placeholder="kcal" aria-label="Calories" required><button class="primary" type="submit">Add meal</button></form>
-        <div class="meal-list" id="mealList" aria-live="polite"></div>
-      </article>
-      <article class="card steps"><div class="card-head"><div class="card-title"><span class="icon" aria-hidden="true">👟</span>Steps</div><span class="goal">Daily goal · 10,000</span></div>
-        <div class="metric-line"><div class="metric"><span id="stepsTotal">0</span> <small>/ 10,000 steps</small></div></div><div class="bar" role="progressbar" aria-label="Steps toward daily goal" aria-valuemin="0" aria-valuemax="10000" id="stepsBar"><div class="bar-fill" id="stepsFill"></div></div>
-        <form class="controls" id="stepsForm"><input class="field" id="stepsInput" type="number" min="0" max="100000" placeholder="Add steps" aria-label="Steps to add" required><button class="primary" type="submit">Add steps</button></form>
-      </article>
-      <article class="card water"><div class="card-head"><div class="card-title"><span class="icon" aria-hidden="true">💧</span>Water</div><span class="goal">Daily goal · 5 litres</span></div>
-        <div class="metric-line"><div class="metric"><span id="waterTotal">0</span> <small>/ 5,000 ml</small></div></div><div class="bar" role="progressbar" aria-label="Water toward daily goal" aria-valuemin="0" aria-valuemax="5000" id="waterBar"><div class="bar-fill" id="waterFill"></div></div><div class="water-marks" id="waterMarks" aria-hidden="true"></div>
-        <div class="controls"><button class="soft-btn" data-water="250">+ 250 ml</button><button class="soft-btn" data-water="500">+ 500 ml</button><button class="soft-btn" data-water="1000">+ 1 litre</button></div>
-      </article>
-      <article class="card habits"><div class="card-head"><div class="card-title"><span class="icon" aria-hidden="true">🌱</span>Daily habits</div><span class="habit-count" id="habitCount">0 of 4 done</span></div>
-        <div class="habit-list" id="habitList"></div><div class="habit-progress"><div id="habitFill"></div></div>
-      </article>
-    </section>
-    <p class="note">Your progress is saved on this device and starts fresh each day. Be kind to yourself — consistency over perfection.</p>
-  </main><div class="toast" id="toast" role="status" aria-live="polite"></div>
-  <script>
-    (()=>{
-      const goals={calories:1500,steps:10000,water:5000};
-      const habits=[{id:'workout',name:'Workout',sub:'Move your body'},{id:'exercise',name:'Exercise',sub:'A little extra movement'},{id:'study',name:'Study',sub:'6 hours of focus'},{id:'prayer',name:'Prayer',sub:'Make time for reflection'}];
-      const dateKey=()=>{const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`};
-      const storageKey=`daily-bloom-${dateKey()}`;
-      let state;try{state=JSON.parse(localStorage.getItem(storageKey))||{meals:[],steps:0,water:0,habits:{}}}catch{state={meals:[],steps:0,water:0,habits:{}}}
-      const save=()=>localStorage.setItem(storageKey,JSON.stringify(state));
-      const $=id=>document.getElementById(id);
-      $('headerDate').textContent=new Intl.DateTimeFormat(undefined,{weekday:'short',month:'short',day:'numeric'}).format(new Date());
-      $('datePill').textContent=new Intl.DateTimeFormat(undefined,{weekday:'long',month:'long',day:'numeric'}).format(new Date());
-      let toastTimer;const toast=msg=>{const el=$('toast');el.textContent=msg;el.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('show'),2100)};
-      function render(){
-        const calories=state.meals.reduce((sum,m)=>sum+m.calories,0),caloriePct=Math.min(100,calories/goals.calories*100);
-        $('calorieTotal').textContent=calories.toLocaleString();$('calorieRemaining').textContent=calories>=goals.calories?`${(calories-goals.calories).toLocaleString()} kcal over goal`:`${(goals.calories-calories).toLocaleString()} kcal remaining`;
-        $('calorieRing').style.setProperty('--progress',`${caloriePct*3.6}deg`);$('calorieFill').style.width=`${caloriePct}%`;$('calorieBar').setAttribute('aria-valuenow',Math.min(calories,goals.calories));
-        $('mealList').innerHTML=state.meals.length?state.meals.map((m,i)=>`<div class="meal-row"><div><span class="meal-name">${escapeHtml(m.name)}</span> <span class="meal-meta">· ${escapeHtml(m.type)}</span></div><div><strong>${m.calories.toLocaleString()} kcal</strong> <button class="remove" type="button" data-remove="${i}" aria-label="Remove ${escapeHtml(m.name)}">×</button></div></div>`).join(''):'<div class="empty">Your meal log will show up here.</div>';
-        $('stepsTotal').textContent=state.steps.toLocaleString();$('stepsFill').style.width=`${Math.min(100,state.steps/goals.steps*100)}%`;$('stepsBar').setAttribute('aria-valuenow',Math.min(state.steps,goals.steps));
-        $('waterTotal').textContent=state.water.toLocaleString();$('waterFill').style.width=`${Math.min(100,state.water/goals.water*100)}%`;$('waterBar').setAttribute('aria-valuenow',Math.min(state.water,goals.water));
-        $('waterMarks').innerHTML=Array.from({length:10},(_,i)=>`<span class="water-mark ${state.water>=(i+1)*500?'filled':''}"></span>`).join('');
-        $('habitList').innerHTML=habits.map(h=>`<button class="habit ${state.habits[h.id]?'done':''}" type="button" data-habit="${h.id}" aria-pressed="${!!state.habits[h.id]}"><span class="check">${state.habits[h.id]?'✓':''}</span><span class="habit-text">${h.name}<span class="habit-sub">${h.sub}</span></span></button>`).join('');
-        const done=habits.filter(h=>state.habits[h.id]).length;$('habitCount').textContent=`${done} of ${habits.length} done`;$('habitFill').style.width=`${done/habits.length*100}%`;
-      }
-      function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-      $('mealForm').addEventListener('submit',e=>{e.preventDefault();const name=$('mealName').value.trim(),calories=Number($('mealCalories').value);if(!name||!Number.isFinite(calories)||calories<1)return;state.meals.push({name,calories,type:$('mealType').value});save();render();e.target.reset();$('mealName').focus();toast('Meal added to your log')});
-      $('mealList').addEventListener('click',e=>{const btn=e.target.closest('[data-remove]');if(!btn)return;state.meals.splice(Number(btn.dataset.remove),1);save();render();toast('Meal removed')});
-      $('stepsForm').addEventListener('submit',e=>{e.preventDefault();const n=Number($('stepsInput').value);if(!Number.isFinite(n)||n<0)return;state.steps=Math.min(100000,state.steps+n);save();render();e.target.reset();toast('Steps updated')});
-      document.querySelectorAll('[data-water]').forEach(btn=>btn.addEventListener('click',()=>{state.water=Math.min(20000,state.water+Number(btn.dataset.water));save();render();toast('Water goal progress updated')}));
-      $('habitList').addEventListener('click',e=>{const btn=e.target.closest('[data-habit]');if(!btn)return;const id=btn.dataset.habit;state.habits[id]=!state.habits[id];save();render()});
-      render();
-    })();
-  </script>
+<p>Record your daily meals here.</p>
+    <button onclick="alert('Meal tracker coming soon!')">
+      Add Meal
+    </button>
+  </div>
+
+  <div class="card">
+    <h2>✅ Daily Habits</h2>
+    <p>Build positive daily routines.</p>
+    <button onclick="alert('Habit tracker coming soon!')">
+      Track Habits
+    </button>
+  </div>
+
+  <div class="card">
+    <h2>💧 Water Tracker</h2>
+    <p>Keep track of your water intake.</p>
+  </div>
+
 </body>
 </html>
