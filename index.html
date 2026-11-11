@@ -1,21 +1,183 @@
-<p>Record your daily meals here.</p>
-    <button onclick="alert('Meal tracker coming soon!')">
-      Add Meal
-    </button>
-  </div>
+.<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0b1020">
+<title>Daily Bloom — Personal Dashboard</title>
+<style>
+:root{--bg:#0b1020;--panel:#131b2e;--panel2:#182238;--line:#26334c;--text:#edf2ff;--muted:#9aa8c0;--green:#83d6a5;--green2:#3f9d70;--blue:#86b7ff;--purple:#b6a0ff;--orange:#ffc28b;--red:#ff9292}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 15% 0%,#1b2940 0,transparent 38%),var(--bg);color:var(--text);font:15px/1.5 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
+button,input,select{font:inherit}button{cursor:pointer}.app{max-width:1180px;margin:auto;padding:25px 24px 50px}
+header{display:flex;justify-content:space-between;align-items:center;margin-bottom:35px}.brand{display:flex;align-items:center;gap:11px;font-weight:800;letter-spacing:.2px}.brand-mark{width:39px;height:39px;display:grid;place-items:center;border-radius:13px;background:linear-gradient(135deg,#3c8d68,#80c99c);color:#07150e;font-size:21px}.date{color:var(--muted);font-size:13px}
+.welcome{display:flex;justify-content:space-between;align-items:end;margin-bottom:24px}.eyebrow{color:var(--green);text-transform:uppercase;letter-spacing:1.7px;font-size:11px;font-weight:800}h1{font-size:clamp(29px,4vw,42px);letter-spacing:-1.5px;line-height:1.1;margin:8px 0}.welcome p{margin:0;color:var(--muted)}.date-pill{background:#1d2b3d;border:1px solid var(--line);padding:9px 14px;border-radius:999px;color:#c6d7ee;font-size:13px}
+.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:16px}.card{background:linear-gradient(160deg,rgba(25,36,57,.98),rgba(17,26,43,.98));border:1px solid var(--line);border-radius:19px;padding:20px;box-shadow:0 16px 45px #0002}.meals{grid-column:span 7}.habits{grid-column:span 5}.activity{grid-column:span 4}.water{grid-column:span 4}.overview{grid-column:span 4}.history{grid-column:span 12}
+.card-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:17px}.card-title{display:flex;align-items:center;gap:10px;font-size:16px;font-weight:750}.ico{width:34px;height:34px;display:grid;place-items:center;background:#25334a;border-radius:11px}.muted{color:var(--muted)}.tiny{font-size:12px;color:var(--muted)}
+.field{width:100%;min-width:0;background:#0e1728;border:1px solid #30405b;border-radius:10px;color:var(--text);padding:10px 11px;outline:none}.field:focus{border-color:#83c9a0;box-shadow:0 0 0 3px #83d6a51a}select option{background:#131b2e}.primary{border:0;border-radius:10px;padding:10px 14px;background:var(--green);color:#07150e;font-weight:800}.primary:hover{background:#a2e7ba}.secondary{border:1px solid #34435e;background:#1b2940;color:#dce8fa;border-radius:10px;padding:9px 12px;font-weight:650}.danger{border:0;background:transparent;color:var(--red);font-size:18px;padding:2px 6px}
+.meal-form{display:grid;grid-template-columns:1fr 1.4fr .8fr auto;gap:8px}.macro-row{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin:15px 0}.macro{background:#101a2c;border:1px solid #26344b;border-radius:12px;padding:11px}.macro strong{display:block;font-size:19px}.macro span{font-size:11px;color:var(--muted)}.meal-list{display:grid;gap:8px;margin-top:13px}.meal-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 12px;background:#101a2c;border:1px solid #233149;border-radius:11px}.meal-row strong{font-size:13px}.meal-row small{display:block;color:var(--muted);font-size:11px}.meal-actions{display:flex;align-items:center;gap:8px;white-space:nowrap}.empty{color:var(--muted);font-size:13px;padding:12px 2px}
+.search-row{display:grid;grid-template-columns:1fr auto;gap:8px;margin:13px 0 8px}.food-results{display:flex;flex-wrap:wrap;gap:7px}.food-chip{border:1px solid #34445d;background:#1a2940;color:#dbe8fa;border-radius:999px;padding:7px 10px;font-size:12px}.food-chip:hover{border-color:var(--green);color:var(--green)}
+.habit-list{display:grid;grid-template-columns:1fr 1fr;gap:9px}.habit{display:flex;align-items:center;gap:9px;text-align:left;background:#101a2c;border:1px solid #2a3952;border-radius:12px;padding:11px;color:var(--text)}.habit.done{border-color:#477c60;background:#142a25}.check{width:20px;height:20px;display:grid;place-items:center;border:1px solid #52627a;border-radius:6px;flex:none}.done .check{background:var(--green2);border-color:var(--green2);color:#07150e}.habit-name{font-size:12px;font-weight:700}.habit-progress{height:6px;border-radius:20px;background:#27344a;overflow:hidden;margin-top:14px}.habit-progress div{height:100%;background:var(--green);width:0;transition:width .2s}.add-habit{display:grid;grid-template-columns:1fr auto;gap:8px;margin-top:13px}
+.metric{font-size:30px;font-weight:800;letter-spacing:-1px}.metric small{font-size:13px;color:var(--muted);font-weight:500;letter-spacing:0}.bar{height:7px;border-radius:20px;background:#29364b;overflow:hidden;margin:10px 0}.bar div{height:100%;width:0;background:linear-gradient(90deg,#60b98b,#9be2b5);border-radius:inherit}.controls{display:flex;gap:8px;margin-top:13px}.controls .field{flex:1}.water-buttons{display:flex;gap:7px;flex-wrap:wrap;margin-top:13px}.water-buttons button{flex:1;min-width:65px}
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.stat{background:#101a2c;border:1px solid #26344b;border-radius:12px;padding:12px}.stat strong{display:block;font-size:21px}.stat span{font-size:11px;color:var(--muted)}
+.history-list{display:grid;gap:8px}.history-row{display:flex;justify-content:space-between;gap:10px;background:#101a2c;padding:10px 12px;border-radius:10px;font-size:13px}.history-row span:last-child{color:var(--muted)}
+.note{font-size:11px;color:#8190a8;text-align:center;margin:22px 0 0}.toast{position:fixed;bottom:20px;left:50%;transform:translate(-50%,12px);opacity:0;pointer-events:none;background:#e2f7e9;color:#102319;padding:10px 15px;border-radius:10px;font-size:13px;font-weight:700;transition:.2s}.toast.show{opacity:1;transform:translate(-50%,0)}
+@media(max-width:800px){.meals,.habits,.activity,.water,.overview{grid-column:span 12}.welcome{align-items:flex-start;flex-direction:column;gap:12px}}
+@media(max-width:520px){.app{padding:18px 13px 35px}.card{padding:16px}.meal-form{grid-template-columns:1fr 1fr}.meal-form button{grid-column:span 2}.habit-list{grid-template-columns:1fr 1fr}.macro-row{gap:6px}.macro{padding:9px}.macro strong{font-size:16px}.meal-row{align-items:flex-start}.meal-actions{gap:3px}}
+</style>
+</head>
+<body>
+<main class="app">
+<header><div class="brand"><div class="brand-mark">✿</div>DAILY BLOOM</div><div class="date" id="headerDate"></div></header>
+<section class="welcome"><div><div class="eyebrow">Your space, your pace</div><h1>Make today count.</h1><p>A simple place to record meals, habits and everyday progress.</p></div><div class="date-pill" id="datePill"></div></section>
 
-  <div class="card">
-    <h2>✅ Daily Habits</h2>
-    <p>Build positive daily routines.</p>
-    <button onclick="alert('Habit tracker coming soon!')">
-      Track Habits
-    </button>
-  </div>
+<section class="grid">
+<article class="card meals">
+<div class="card-head"><div class="card-title"><span class="ico">🍽️</span>Meal journal</div><span class="tiny" id="mealCount">0 entries</span></div>
+<div class="macro-row">
+<div class="macro"><strong id="kcalTotal">0</strong><span>Estimated kcal</span></div>
+<div class="macro"><strong id="proteinTotal">0 g</strong><span>Protein</span></div>
+<div class="macro"><strong id="carbTotal">0 g</strong><span>Carbs</span></div>
+</div>
+<div class="macro"><strong id="fatTotal">0 g</strong><span>Fat</span></div>
+<div style="height:14px"></div>
+<form id="mealForm" class="meal-form">
+<select class="field" id="mealType" aria-label="Meal type"><option>Breakfast</option><option>Lunch</option><option>Dinner</option><option>Snack</option></select>
+<input class="field" id="foodName" placeholder="Food name" maxlength="60" required aria-label="Food name">
+<input class="field" id="foodQty" type="number" min="1" max="5000" value="100" required aria-label="Quantity in grams">
+<button class="primary" type="submit">Add</button>
+</form>
+<div class="tiny" style="margin-top:6px">Quantity is in grams. For packaged foods, use the label values where possible.</div>
+<div class="search-row"><input class="field" id="foodSearch" placeholder="Search built-in foods…" aria-label="Search foods"><button class="secondary" id="clearSearch" type="button">Clear</button></div>
+<div class="food-results" id="foodResults"></div>
+<div class="meal-list" id="mealList"><div class="empty">Your meal entries will appear here.</div></div>
+</article>
 
-  <div class="card">
-    <h2>💧 Water Tracker</h2>
-    <p>Keep track of your water intake.</p>
-  </div>
+<article class="card habits">
+<div class="card-head"><div class="card-title"><span class="ico">🌱</span>Daily habits</div><span class="tiny" id="habitCount">0 completed</span></div>
+<div class="habit-list" id="habitList"></div>
+<div class="habit-progress"><div id="habitFill"></div></div>
+<form class="add-habit" id="habitForm"><input class="field" id="habitInput" placeholder="Add a habit…" maxlength="35" required><button class="secondary" type="submit">Add</button></form>
+</article>
 
+<article class="card activity">
+<div class="card-head"><div class="card-title"><span class="ico">👟</span>Activity</div></div>
+<div class="metric"><span id="stepsTotal">0</span> <small>steps recorded</small></div>
+<div class="bar"><div id="stepsFill"></div></div>
+<form class="controls" id="stepsForm"><input class="field" id="stepsInput" type="number" min="1" max="100000" placeholder="Add steps" required><button class="primary">Add</button></form>
+<div class="tiny" style="margin-top:10px">Record movement at a pace that feels comfortable.</div>
+</article>
+
+<article class="card water">
+<div class="card-head"><div class="card-title"><span class="ico">💧</span>Water log</div></div>
+<div class="metric"><span id="waterTotal">0</span> <small>ml recorded</small></div>
+<div class="water-buttons"><button class="secondary" data-water="150">+150 ml</button><button class="secondary" data-water="250">+250 ml</button><button class="secondary" data-water="500">+500 ml</button></div>
+<div class="tiny" style="margin-top:12px">A simple intake log, not a required target.</div>
+</article>
+
+<article class="card overview">
+<div class="card-head"><div class="card-title"><span class="ico">✨</span>Today's overview</div></div>
+<div class="stat-grid">
+<div class="stat"><strong id="overviewMeals">0</strong><span>Meals logged</span></div>
+<div class="stat"><strong id="overviewHabits">0</strong><span>Habits checked</span></div>
+<div class="stat"><strong id="overviewSteps">0</strong><span>Steps recorded</span></div>
+<div class="stat"><strong id="overviewWater">0</strong><span>Water entries (ml)</span></div>
+</div>
+</article>
+
+<article class="card history">
+<div class="card-head"><div class="card-title"><span class="ico">📅</span>Recent daily history</div><button class="secondary" id="exportBtn" type="button">Export data</button></div>
+<div class="history-list" id="historyList"><div class="empty">Your saved daily summaries will appear here as you use the tracker.</div></div>
+</article>
+</section>
+<p class="note">Your entries are saved in this browser on this device. Export a backup regularly if you want to keep a copy. Food nutrition values are estimates; check product labels for greater accuracy.</p>
+</main>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script>
+(()=>{
+'use strict';
+const foods=[
+{name:'Chicken breast, cooked',kcal:165,p:31,c:0,f:3.6},
+{name:'Egg, whole',kcal:143,p:13,c:1.1,f:9.5},
+{name:'White rice, cooked',kcal:130,p:2.7,c:28,f:.3},
+{name:'Roti, plain',kcal:297,p:9,c:50,f:7},
+{name:'Plain yogurt',kcal:61,p:3.5,c:4.7,f:3.3},
+{name:'Banana',kcal:89,p:1.1,c:22.8,f:.3},
+{name:'Apple',kcal:52,p:.3,c:13.8,f:.2},
+{name:'Potato, boiled',kcal:87,p:1.9,c:20.1,f:.1},
+{name:'Oats, dry',kcal:389,p:16.9,c:66.3,f:6.9},
+{name:'Milk, whole',kcal:61,p:3.2,c:4.8,f:3.3},
+{name:'Almonds',kcal:579,p:21.2,c:21.6,f:49.9},
+{name:'Lentils, cooked',kcal:116,p:9,c:20.1,f:.4},
+{name:'Cucumber',kcal:15,p:.7,c:3.6,f:.1},
+{name:'Tomato',kcal:18,p:.9,c:3.9,f:.2}
+];
+const defaultHabits=['Study / focused work','Take a movement break','Eat regular meals','Personal care'];
+const todayKey=()=>{const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`};
+const key=t=>`daily-bloom-v2-${t}`;
+const fresh=()=>({meals:[],steps:0,water:0,habits:[],habitNames:[...defaultHabits]});
+let state=load(todayKey());
+function load(day){try{return JSON.parse(localStorage.getItem(key(day)))||fresh()}catch{return fresh()}}
+function save(){localStorage.setItem(key(todayKey()),JSON.stringify(state))}
+const $=id=>document.getElementById(id);
+const fmt=n=>Math.round(n*10)/10;
+const safe=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+let toastTimer;
+function toast(message){const el=$('toast');el.textContent=message;el.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('show'),1900)}
+function dateLabel(day){return new Intl.DateTimeFormat(undefined,{weekday:'short',month:'short',day:'numeric'}).format(new Date(day+'T12:00:00'))}
+function render(){
+ const totals=state.meals.reduce((a,m)=>({k:a.k+m.kcal,p:a.p+m.p,c:a.c+m.c,f:a.f+m.f}),{k:0,p:0,c:0,f:0});
+ $('kcalTotal').textContent=Math.round(totals.k).toLocaleString();
+ $('proteinTotal').textContent=fmt(totals.p)+' g';$('carbTotal').textContent=fmt(totals.c)+' g';$('fatTotal').textContent=fmt(totals.f)+' g';
+ $('mealCount').textContent=state.meals.length+' entries';
+ $('mealList').innerHTML=state.meals.length?state.meals.map((m,i)=>`<div class="meal-row"><div><strong>${safe(m.name)}</strong><small>${safe(m.type)} · ${m.qty} g · P ${fmt(m.p)}g / C ${fmt(m.c)}g / F ${fmt(m.f)}g</small></div><div class="meal-actions"><strong>${Math.round(m.kcal)} kcal</strong><button class="danger" type="button" data-remove="${i}" aria-label="Remove meal">×</button></div></div>`).join(''):'<div class="empty">No meals logged yet. Add one above.</div>';
+ $('habitList').innerHTML=state.habitNames.map((h,i)=>{const done=state.habits.includes(i);return `<button class="habit ${done?'done':''}" type="button" data-habit="${i}" aria-pressed="${done}"><span class="check">${done?'✓':''}</span><span class="habit-name">${safe(h)}</span></button>`}).join('');
+ $('habitCount').textContent=state.habits.length+' completed';$('habitFill').style.width=(state.habitNames.length?state.habits.length/state.habitNames.length*100:0)+'%';
+ $('stepsTotal').textContent=state.steps.toLocaleString();$('stepsFill').style.width=Math.min(100,state.steps/10000*100)+'%';
+ $('waterTotal').textContent=state.water.toLocaleString();
+ $('overviewMeals').textContent=state.meals.length;$('overviewHabits').textContent=state.habits.length;$('overviewSteps').textContent=state.steps.toLocaleString();$('overviewWater').textContent=state.water.toLocaleString();
+ renderHistory();
+}
+function renderHistory(){
+ const days=[];for(let i=0;i<7;i++){const d=new Date();d.setDate(d.getDate()-i);const day=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;const s=day===todayKey()?state:load(day);if(s.meals.length||s.steps||s.water||s.habits.length)days.push({day,s})}
+ $('historyList').innerHTML=days.length?days.map(({day,s})=>`<div class="history-row"><strong>${dateLabel(day)}</strong><span>${s.meals.length} meals · ${s.steps.toLocaleString()} steps · ${s.water.toLocaleString()} ml · ${s.habits.length} habits</span></div>`).join(''):'<div class="empty">Your saved daily summaries will appear here as you use the tracker.</div>';
+}
+function renderFoodSearch(){
+ const q=$('foodSearch').value.trim().toLowerCase();
+ const matches=foods.filter(f=>!q||f.name.toLowerCase().includes(q)).slice(0,8);
+ $('foodResults').innerHTML=matches.map((f)=>`<button class="food-chip" type="button" data-food="${safe(f.name)}">${safe(f.name)}</button>`).join('');
+}
+function addFood(food,qty,type){
+ const factor=qty/100;
+ state.meals.push({name:food.name,type,qty,kcal:food.kcal*factor,p:food.p*factor,c:food.c*factor,f:food.f*factor});
+ save();render();toast('Food added to your meal journal');
+}
+$('mealForm').addEventListener('submit',e=>{
+ e.preventDefault();const name=$('foodName').value.trim(),qty=Number($('foodQty').value),type=$('mealType').value;
+ if(!name||!Number.isFinite(qty)||qty<=0)return;
+ const known=foods.find(f=>f.name.toLowerCase()===name.toLowerCase());
+ if(known){addFood(known,qty,type);e.target.reset();$('foodQty').value=100;return}
+ const kcal=Number(prompt('Enter estimated calories for this quantity ('+qty+' g):','0'));
+ if(!Number.isFinite(kcal)||kcal<0){toast('Entry cancelled');return}
+ const p=Number(prompt('Protein in grams for this quantity (optional; enter 0 if unknown):','0'))||0;
+ const c=Number(prompt('Carbohydrates in grams for this quantity (optional; enter 0 if unknown):','0'))||0;
+ const f=Number(prompt('Fat in grams for this quantity (optional; enter 0 if unknown):','0'))||0;
+ state.meals.push({name,type,qty,kcal,p,c,f});save();render();e.target.reset();$('foodQty').value=100;toast('Custom food added');
+});
+$('foodResults').addEventListener('click',e=>{const b=e.target.closest('[data-food]');if(!b)return;const food=foods.find(f=>f.name===b.dataset.food);if(!food)return;$('foodName').value=food.name;$('foodName').focus();toast('Food selected — set grams and press Add')});
+$('foodSearch').addEventListener('input',renderFoodSearch);
+$('clearSearch').addEventListener('click',()=>{$('foodSearch').value='';renderFoodSearch()});
+$('mealList').addEventListener('click',e=>{const b=e.target.closest('[data-remove]');if(!b)return;state.meals.splice(Number(b.dataset.remove),1);save();render();toast('Meal removed')});
+$('habitList').addEventListener('click',e=>{const b=e.target.closest('[data-habit]');if(!b)return;const i=Number(b.dataset.habit);state.habits=state.habits.includes(i)?state.habits.filter(x=>x!==i):[...state.habits,i];save();render()});
+$('habitForm').addEventListener('submit',e=>{e.preventDefault();const name=$('habitInput').value.trim();if(!name)return;state.habitNames.push(name);save();render();e.target.reset();toast('Habit added')});
+$('stepsForm').addEventListener('submit',e=>{e.preventDefault();const n=Number($('stepsInput').value);if(!Number.isFinite(n)||n<=0)return;state.steps=Math.min(1000000,state.steps+n);save();render();e.target.reset();toast('Steps updated')});
+document.querySelectorAll('[data-water]').forEach(b=>b.addEventListener('click',()=>{state.water=Math.min(50000,state.water+Number(b.dataset.water));save();render();toast('Water log updated')}));
+$('exportBtn').addEventListener('click',()=>{
+ const records={};for(let i=0;i<365;i++){const d=new Date();d.setDate(d.getDate()-i);const day=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;const s=day===todayKey()?state:load(day);if(s.meals.length||s.steps||s.water||s.habits.length)records[day]=s}
+ const blob=new Blob([JSON.stringify(records,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='daily-bloom-backup.json';a.click();URL.revokeObjectURL(url);toast('Backup exported');
+});
+const now=new Date();$('headerDate').textContent=new Intl.DateTimeFormat(undefined,{weekday:'short',month:'short',day:'numeric'}).format(now);$('datePill').textContent=new Intl.DateTimeFormat(undefined,{weekday:'long',month:'long',day:'numeric'}).format(now);
+renderFoodSearch();render();
+})();
+</script>
 </body>
 </html>
